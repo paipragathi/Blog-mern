@@ -50,6 +50,7 @@ export default function DashProfile() {
   }, [imageFile]);
 
   const uploadImage = async () => {
+    console.log('Uploading image');
     // service firebase.storage {
     //   match /b/{bucket}/o {
     //     match /{allPaths=**} {
@@ -95,6 +96,7 @@ export default function DashProfile() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
+    console.log(formData);
   };
 
   const handleSubmit = async (e) => {

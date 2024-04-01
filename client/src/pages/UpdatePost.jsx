@@ -26,26 +26,33 @@ export default function UpdatePost() {
     const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
+    console.log(formData, currentUser._id);
     try {
       const fetchPost = async () => {
         const res = await fetch(`/api/post/getposts?postId=${postId}`);
         const data = await res.json();
+        console.log(data.posts[0]);
         if (!res.ok) {
           console.log(data.message);
           setPublishError(data.message);
           return;
         }
         if (res.ok) {
+          console.log("hello");
           setPublishError(null);
           setFormData(data.posts[0]);
+          console.log(formData);
         }
       };
 
       fetchPost();
     } catch (error) {
-      console.log(error.message);
+      console.log( error.message);
     }
   }, [postId]);
+  useEffect(() => {
+    console.log("Updated formData:", formData);
+  }, [formData]);
 
   const handleUpdloadImage = async () => {
     try {
@@ -86,7 +93,7 @@ export default function UpdatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`/api/post/updatepost/${formData._id}/${currentUser._id}`, {
+      const res = await fetch(`/api/post/updatepost/${postId}/${currentUser._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
